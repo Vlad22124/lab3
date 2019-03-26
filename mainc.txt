@@ -1,0 +1,225 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+float MetodP( float (*exaple)(float x))
+{
+    int n,i,g;
+    float x, k, d, S=0 ,W=0, a, b, t,result;
+
+    printf ("enter lower bound\n"); //Выбор количества шагов вычисления
+
+    scanf ("%f", &a); //ввод значения
+
+    printf ("enter upper bound\n"); //Выбор количества шагов вычисления
+
+    scanf ("%f", &b); //ввод значения
+
+    printf ("enter the number of steps\n"); //Выбор количества шагов вычисления
+
+    scanf ("%f", &k); //ввод значения
+
+    d=(b-a)/(2*k); //по формуле вычисления интеграла методом прямоугольников
+    x=a; //Находим разницу концов промежутков интегрирования и делим ее на кол-во шагов
+    for (i=1; i<=2*k; i+=1) 
+    {
+        x=a+i*d;
+        x=x-d/2;
+        result = exaple(x);
+       
+        S=S + result; //по формуле прямоугольников вычисляем значение S 
+    }
+    S=S*d; //S умножаем на d
+    printf ("integral=%f\n",S); //выводим результат
+}
+
+float MetodT(float (*exaple)(float x))
+{
+    int n,i,g;
+    float x, k, d, S=0 ,W=0, a, b, t,result;
+
+    printf ("enter lower bound\n"); //Выбор количества шагов вычисления
+
+    scanf ("%f", &a); //ввод значения
+
+    printf ("enter upper bound\n"); //Выбор количества шагов вычисления
+
+    scanf ("%f", &b); //ввод значения
+
+    printf ("enter the number of steps\n"); //Выбор количества шагов вычисления
+    
+    scanf ("%f", &k); //ввод значения
+    d=(b-a)/(2*k); //Находим разницу концов промежутков интегрирования 
+    x=a; //и делим ее на кол-во шагов
+    g = 2*k;
+    result = exaple(x) + exaple(b);
+    S=result/2; //по формуле трапеций находим значения S
+    for (i=1;i<=(2*k)-1; i+=1) 
+    {
+        x=a+i*d;
+        result = exaple(x);
+        S=S + result; 
+    }
+    S= S * d; //S умножаем на d
+    printf ("integral=%f\n",S); //выводим результат
+}
+
+float MetodS(float (*exaple)(float x))
+{
+    int n,i,g;
+    float x, k, d, S=0 ,W=0, a, b, t,result,m,v;
+
+    printf ("enter lower bound\n"); //Выбор количества шагов вычисления
+    
+    scanf ("%f", &a); //ввод значения
+    
+    printf ("enter upper bound\n"); //Выбор количества шагов вычисления
+
+    scanf ("%f", &b); //ввод значения
+
+    printf ("enter the number of steps\n"); //Выбор количества шагов вычисления
+
+    scanf ("%f", &k); //ввод значения
+
+    d=(b-a)/(2*k); //Находим разницу концов промежутков интегрирования 
+     //и делим ее на кол-во шагов
+
+    for (i=1; i<=2*k-1; i+=2)
+    {
+        m = a+(i-1)*d;
+        v = a+(i+1)*d; 
+        x = a+i*d;
+        result = exaple(m)+ 4 * exaple(x)+exaple(v);
+        S=S + result;
+    }
+    d=d/3;
+    S=S*d;
+    printf ("integral=%f\n",S); //выводим результат
+}
+
+float SINN(float x)
+{
+    return sin(x);
+}
+
+float EXPP(float x)
+{
+    return exp(x);
+}
+
+float SL(float x)
+{
+    return exp(2 * x)+2.5 * sin(3 * x);
+}
+
+int main()
+
+{
+    float (*exaple) (float x); 
+    int drop,n,e;
+    drop=1;
+    do
+    {
+        printf ("Metod 1: rectangle method\n");
+        printf ("Metod 2: trapezoid method\n");
+        printf ("Metod 3: Simpson's method\n");
+        printf ("Press 0 to exit\n");
+
+        for (;;)
+
+        {
+
+            printf ("selected method\n");
+
+            scanf ("%d", &n); //оператор ввода. Считываем введенный метод
+
+            switch(n) //оператор выбора. Выбираем метод вычисления
+            {
+                case 1:
+              
+                printf ("example 1: sin(x)\n");
+                printf ("example 2: e^x\n");
+                printf ("example 3: e^(2*x)+2.5*sin(3*x)\n");
+                printf ("selected example\n");
+                scanf ("%d", &e);
+
+                switch(e)
+                {
+                    case 1:
+                        exaple = SINN;
+                        break;
+                    case 2:
+                        exaple = EXPP;
+                        break;
+                    case 3:
+                        exaple = SL;
+                        break;
+                }
+
+                MetodP(*exaple);
+                break;
+
+                case 2:
+                    printf ("example 1: sin(x)\n");
+                    printf ("example 2: e^x\n");
+                    printf ("example 3: e^(2*x)+2.5*sin(3*x)\n");
+                    printf ("selected example\n");
+                    scanf ("%d", &e);
+
+                    switch(e)
+                    {
+                        case 1:
+                            exaple = SINN;
+                            break;
+                        case 2:
+                            exaple = EXPP;
+                            break;
+                        case 3:
+                            exaple = SL;
+                            break;
+                    }
+                    MetodT(*exaple);
+                    break;
+
+
+                case 3:
+                    printf ("example 1: sin(x)\n");
+                    printf ("example 2: e^x\n");
+                    printf ("example 3: e^(2*x)+2.5*sin(3*x)\n");
+                    printf ("selected example\n");
+                    scanf ("%d", &e);
+
+                    switch(e)
+                    {
+                        case 1:
+                            exaple = SINN;
+                            break;
+                        case 2:
+                            exaple = EXPP;
+                            break;
+                        case 3:
+                            exaple = SL;
+                            break;
+                    }   
+
+                    MetodS(*exaple);
+                    break;
+
+                case 0: 
+
+                    drop=0;
+                    break;
+                }
+
+
+            printf ("the work program has finished\n");
+            printf ("--------------------------------------------------------------\n");
+
+
+            rewind(stdin); //очищение памяти
+
+
+        }
+    }while (drop == 1);
+return 0;
+}
